@@ -1,12 +1,15 @@
-html, body {
-  margin:0px;
+html,
+body {
+  margin: 0px;
+  background: url("./Assets/Images/background.png");
+  color: white;
 }
 
 .box {
-  height:100vh;
+  height: 85vh;
 }
 
 #stage > canvas {
   width: 99vw;
-  height: 99vh;
+  height: 80vh;
 }

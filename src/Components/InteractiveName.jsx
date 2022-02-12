@@ -19,8 +19,8 @@ const jarStyle = {
   isStatic: true,
   render: {
     lineWidth: 1,
-    strokeStyle: "red",
-    fillStyle: "red",
+    strokeStyle: "transparent",
+    fillStyle: "transparent",
   },
 };
 
@@ -83,13 +83,7 @@ function InteractiveName(props) {
       };
 
       loadSvg(TestSVG).then(function (root) {
-        var color = Common.choose([
-          "#f19648",
-          "#f5d259",
-          "#f55a3c",
-          "#063e7b",
-          "#ececd1",
-        ]);
+        var color = Common.choose(["#f55a3c"]);
 
         var vertexSets = select(root, "path").map(function (path) {
           return Svg.pathToVertices(path, 30);
@@ -128,6 +122,15 @@ function InteractiveName(props) {
         },
       });
 
+    mouseConstraint.mouse.element.removeEventListener(
+      "mousewheel",
+      mouseConstraint.mouse.mousewheel
+    );
+    mouseConstraint.mouse.element.removeEventListener(
+      "DOMMouseScroll",
+      mouseConstraint.mouse.mousewheel
+    );
+
     Composite.add(engine.current.world, mouseConstraint);
 
     // keep the mouse in sync with rendering
@@ -148,7 +151,15 @@ function InteractiveName(props) {
     };
   }, []);
 
-  return <div ref={scene} style={{ position: "absolute" }} id="stage" />;
+  return (
+    <div
+      ref={scene}
+      style={{
+        position: "absolute",
+      }}
+      id="stage"
+    />
+  );
 }
 
 export default InteractiveName;

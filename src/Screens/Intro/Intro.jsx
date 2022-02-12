@@ -17,6 +17,9 @@ export default function Intro() {
             </Grid>
           </Grid>
         </Container>
+        <Typography variant="h4" style={{ textAlign: "center" }}>
+          Pick me up and toss me around
+        </Typography>
       </div>
     </>
   );
