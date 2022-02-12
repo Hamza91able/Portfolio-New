@@ -131,6 +131,29 @@ function InteractiveName(props) {
       mouseConstraint.mouse.mousewheel
     );
 
+    let touchStart = null;
+    mouseConstraint.mouse.element.addEventListener("touchstart", (event) => {
+      if (!mouseConstraint.body) {
+        touchStart = event;
+      }
+    });
+
+    mouseConstraint.mouse.element.addEventListener("touchend", (event) => {
+      event.preventDefault();
+      touchStart = null;
+    });
+
+    mouseConstraint.mouse.element.addEventListener("touchmove", (event) => {
+      if (!mouseConstraint.body && touchStart) {
+        event.preventDefault();
+        let start = touchStart.touches[0].clientY;
+        let end = event.touches[0].clientY;
+        let delta = start - end;
+        window.scrollTo(0, window.scrollY + delta);
+        touchStart = event;
+      }
+    });
+
     Composite.add(engine.current.world, mouseConstraint);
 
     // keep the mouse in sync with rendering
