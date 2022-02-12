@@ -49,6 +49,10 @@ export const jarStyle = {
   render: {
     lineWidth: 1,
     strokeStyle: "transparent",
-    fillStyle: "red",
+    fillStyle: "transparent",
   },
 };
+
+export const CANDIES_LIMIT = 390;
+
+export const CANDIES_PER_INTERVAL = 80;

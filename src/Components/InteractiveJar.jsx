@@ -1,8 +1,15 @@
 import { useEffect, useRef } from "react";
-import { Engine, Render, Bodies, World, Composite, Events } from "matter-js";
-import { JAR, jarStyle, shuffle } from "../Helpers";
+import { Engine, Render, Bodies, World, Composite } from "matter-js";
+import {
+  CANDIES_LIMIT,
+  CANDIES_PER_INTERVAL,
+  JAR,
+  jarStyle,
+  shuffle,
+} from "../Helpers";
+import { centerstyle } from "../Styles";
 
-function InteractiveJar({ start, setStart }) {
+function InteractiveJar({ start, setStart, current_candies }) {
   const scene = useRef();
   const engine = useRef(Engine.create());
 
@@ -32,10 +39,10 @@ function InteractiveJar({ start, setStart }) {
     });
 
     Composite.add(engine.current.world, [
-      Bodies.rectangle(570, 340, 40, 480, jarStyle),
-      Bodies.rectangle(385, 340, 40, 480, jarStyle),
-      Bodies.rectangle(480, 570, 210, 40, jarStyle),
-      Bodies.rectangle(600, 600, 900, 20, jarStyle),
+      Bodies.rectangle(540, 330, 20, 340, jarStyle),
+      Bodies.rectangle(265, 330, 20, 340, jarStyle),
+      Bodies.rectangle(400, 520, 300, 40, jarStyle),
+      Bodies.rectangle(400, 550, 600, 20, jarStyle),
     ]);
 
     Engine.run(engine.current);
@@ -58,7 +65,8 @@ function InteractiveJar({ start, setStart }) {
   }, []);
 
   useEffect(() => {
-    if (start) fillMarbles(1);
+    if (start && current_candies <= CANDIES_LIMIT) fillMarbles(1);
+    else setStart(false);
   }, [start]);
 
   const fillMarbles = (size) => {
@@ -68,7 +76,7 @@ function InteractiveJar({ start, setStart }) {
     var list3 = [];
     var s;
 
-    for (var i = 0; i < 50; i++) {
+    for (var i = 0; i < CANDIES_PER_INTERVAL; i++) {
       list1.push(JAR.kids[Math.floor(Math.random() * JAR.kids.length)].color);
     }
 
@@ -93,7 +101,7 @@ function InteractiveJar({ start, setStart }) {
       while (i < list.length) {
         var c = JAR.palette[parseInt(list[i])];
         var r = s * rad_multiplier;
-        x = 450 + Math.trunc(50 * Math.random());
+        x = 380 + Math.trunc(50 * Math.random());
         y -= s;
         body = Bodies.circle(x, y, r, {
           isSensor: false,
@@ -113,13 +121,7 @@ function InteractiveJar({ start, setStart }) {
     }, 2000);
   };
 
-  return (
-    <div
-      ref={scene}
-      onClick={() => fillMarbles(1)}
-      // style={{ position: "absolute" }}
-    />
-  );
+  return <div ref={scene} id="jar-stage" style={{ ...centerstyle }} />;
 }
 
 export default InteractiveJar;
