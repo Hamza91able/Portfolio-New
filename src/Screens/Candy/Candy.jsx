@@ -4,8 +4,6 @@ import InteractiveJar from "../../Components/InteractiveJar";
 import { centerstyle } from "../../Styles";
 import { CANDIES_LIMIT, CANDIES_PER_INTERVAL } from "../../Helpers";
 
-import JarImage from "../../Assets/Images/jar.png";
-
 export default function Candy() {
   const [start, setStart] = useState(false);
   const [isFilledOnce, setIsFilledOnce] = useState(false);
